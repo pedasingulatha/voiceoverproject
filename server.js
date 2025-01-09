@@ -197,6 +197,10 @@ app.post('/ask', (req, res) => {
 
     // Use the most recent file
     const latestFile = user.files[user.files.length - 1];
+    if (!fs.existsSync(latestFile)) {
+        console.log('Latest file not found on the server.');
+        return res.status(404).send('Latest file not found on the server.');
+    }
     // Read the Excel file
     const workbook = xlsx.readFile(latestFile);
     const data = workbook.SheetNames.flatMap(sheet =>
