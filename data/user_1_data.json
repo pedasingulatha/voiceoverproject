@@ -1,0 +1,98 @@
+[
+  {
+    "Question": "What is your name",
+    "Answer": "My name is QNA Bot."
+  },
+  {
+    "Question": "How are you",
+    "Answer": "I’m doing great! How about you?"
+  },
+  {
+    "Question": "What is the time now",
+    "Answer": "I can't tell time yet, sorry!"
+  },
+  {
+    "Question": "what is python",
+    "Answer": "A programming language"
+  },
+  {
+    "Question": "what is pandas",
+    "Answer": "a data analysis library"
+  },
+  {
+    "Question": "what is an excel file",
+    "Answer": "a spreadsheet file formate"
+  },
+  {
+    "Question": "hello",
+    "Answer": "hello,user"
+  },
+  {
+    "Question": "what is the hospital timings",
+    "Answer": "24 hours"
+  },
+  {
+    "Question": "how can I book my appointment",
+    "Answer": "you can book via call"
+  },
+  {
+    "Question": "which type treatments is available in your hospital",
+    "Answer": "we can treat all types of treatments"
+  },
+  {
+    "Question": "is doctor available for cardiac treatment",
+    "Answer": "yes,doctor is available "
+  },
+  {
+    "Question": "what is your special for today",
+    "Answer": "kaju"
+  },
+  {
+    "Question": "what is the cost of kaju per kilo",
+    "Answer": "340rupees"
+  },
+  {
+    "Question": "What is the name of your sweets shop",
+    "Answer": "Our sweets shop is called \"Sweet Delights\"."
+  },
+  {
+    "Question": "What types of sweets do you sell",
+    "Answer": "We sell a variety of sweets, including cakes, pastries, chocolates, ice cream, and traditional Indian sweets like gulab jamun and jalebi."
+  },
+  {
+    "Question": "Do you offer custom cake orders",
+    "Answer": "Yes, we offer custom cake orders for special occasions like birthdays, weddings, and anniversaries."
+  },
+  {
+    "Question": "What is your best selling sweet treat",
+    "Answer": "Our best-selling sweet treat is our signature chocolate cake, which is made with rich, dark chocolate and topped with creamy chocolate frosting."
+  },
+  {
+    "Question": "Do you have any sugar free or vegan options",
+    "Answer": "Yes, we have a selection of sugar-free and vegan options, including sugar-free chocolates and vegan ice cream."
+  },
+  {
+    "Question": "Can customers place orders online or over the phone",
+    "Answer": "Yes, customers can place orders online through our website or over the phone by calling us during business hours."
+  },
+  {
+    "Question": "Do you offer any discounts or promotions",
+    "Answer": "Yes, we offer discounts and promotions throughout the year, including buy-one-get-one-free deals and discounts for bulk orders."
+  },
+  {
+    "Question": "What are your shops hours of operation",
+    "Answer": "Our shop is open from 11am to 10pm, Monday through Saturday, and from 12pm to 9pm on Sundays."
+  },
+  {
+    "Question": "Do you cater to special events or parties",
+    "Answer": "Yes, we cater to special events and parties, including weddings, birthday parties, and corporate events."
+  },
+  {
+    "Question": "Can customers customize their own sweets or desserts",
+    "Answer": "Yes, customers can customize their own sweets or desserts by choosing from a variety of flavors, toppings, and decorations."
+  },
+  {
+    "Question": "is doctor available for heart treatment",
+    "Answer": "yes,doctor is available are"
+  }
+]

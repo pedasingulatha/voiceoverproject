@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        button {
+            display: block;
+            padding: 10px 20px;
+            background-color: #1d72b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 15px 0;
+        }
+
+        button:hover {
+            background-color: #155a8c;
+        }
+
+        /* Profile Icon */
+        .profile-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #1d72b8;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 60%;
+            height: 60%;
+        }
+
+        /* Form Container (Hidden by Default) */
+        .form-container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none; /* Hidden initially */
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-container input:focus {
+            border-color: #1d72b8;
+            outline: none;
+            box-shadow: 0 0 5px rgba(29, 114, 184, 0.5);
+        }
+
+        #ask-button {
+            background-color: #28a745;
+        }
+
+        #ask-button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-container {
+                width: 90%;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Profile Icon (Top Right Corner) -->
+    <div class="profile-icon" onclick="toggleForm()">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD_ar-TyGOcevCdj67RfsGz754XtZzP1kCuQ&s" alt="User Icon">
+        
+    </div>
+
+    <!-- Heading and Button -->
+    <h1 id="dashboard-heading">Welcome to the Dashboard!</h1>
+    <button id="ask-button">Ask Me Anything</button> 
+    
+    <!-- Form container initially hidden -->
+    <div class="form-container">
+        <h2>Welcome!</h2>
+        <button id="logout-button">Logout</button>
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="file-upload">Upload Excel File:</label>
+            <input type="file" id="file-upload" name="excel_file" accept=".xls, .xlsx">
+            <button type="submit">Upload</button>
+            
+        </form>
+        <button id="change-password-button">Change Password</button>
+        <a href="/dashboard">Back</a>
+    </div>
+
+    <script>
+        document.getElementById('logout-button').addEventListener('click', () => {
+            window.location.href = '/login';
+        });
+
+        // Toggle form visibility
+        function toggleForm() {
+            const formContainer = document.querySelector('.form-container');
+            const dashboardHeading = document.getElementById('dashboard-heading');
+            const askButton = document.getElementById('ask-button');
+            
+            // Toggle visibility of the heading and button
+            if (formContainer.style.display === 'none') {
+                formContainer.style.display = 'block';
+                dashboardHeading.style.display = 'none'; // Hide the heading
+                askButton.style.display = 'none'; // Hide the Ask button
+            } else {
+                formContainer.style.display = 'none';
+                dashboardHeading.style.display = 'block'; // Show the heading again
+                askButton.style.display = 'block'; // Show the Ask button again
+            }
+        }
+        document.getElementById('change-password-button').addEventListener('click', () => {
+            window.location.href = '/change-password.html';
+        });
+        
+        
+
+        // Voice recognition setup
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.maxResults = 1;
+
+        // Enable noise suppression
+        recognition.noiseSuppression = true;
+
+        // Voice-to-text interaction
+        document.getElementById('ask-button').addEventListener('click', () => {
+            const greeting = new SpeechSynthesisUtterance("How can I help you?");
+            window.speechSynthesis.speak(greeting);
+
+            setTimeout(() => {
+                recognition.start();
+            }, 1000);
+        });
+
+        recognition.onresult = async (event) => {
+            const question = event.results[0][0].transcript;
+
+            // Send the question to the backend
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ question }),
+                });
+
+                const data = await response.json();
+                const answer = data.message;
+
+                // Voice output only
+                const speech = new SpeechSynthesisUtterance(answer);
+                speech.lang = 'en-US';
+                window.speechSynthesis.speak(speech);
+
+            } catch (err) {
+                console.error('Error fetching response:', err);
+                alert('An error occurred while processing your request.');
+            }
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Error occurred during speech recognition:', event.error);
+        };
+
+        const uploadForm = document.getElementById('upload-form');
+        uploadForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(uploadForm);
+
+            try {
+                const response = await fetch('/upload-excel', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const message = await response.text();
+                alert(message); // Notify user of the upload status
+            } catch (err) {
+                console.error('Error uploading file:', err);
+                alert('Failed to upload file.');
+            }
+        });
+    </script>
+</body>
+</html>

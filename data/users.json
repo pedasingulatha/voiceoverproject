@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "business_name": "temple",
+    "username": "sriram",
+    "password": "sriram",
+    "email": "sriram@gmail.com",
+    "phone": "7877947989",
+    "files": [
+      "uploads\\temple.xlsx",
+      "C:\\Users\\ktkdl\\OneDrive\\Desktop\\RENDER\\my_project\\uploads\\user_1\\kite.xlsx"
+    ],
+    "excelData": [
+      {
+        "Question": "Do you have any sunflowers available",
+        "Answer": "Yes, we have a fresh batch of sunflowers that just arrived this morning"
+      },
+      {
+        "Question": "How much do your sunflowers cost",
+        "Answer": "Our sunflowers are ₹410 per stem or ₹1640 for a bouquet of 5"
+      },
+      {
+        "Question": "Do you have any roses available for delivery today",
+        "Answer": "Yes, we have a variety of roses available. We have red, pink, white, and yellow roses. Which color would you like? We can arrange for same-day delivery if you place your order within the next hour"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "business_name": "fabric",
+    "username": "seetha",
+    "password": "rama",
+    "email": "seetha@gmail.com",
+    "phone": "6479622828",
+    "files": [
+      "uploads\\fabric.xlsx",
+      "C:\\Users\\ktkdl\\OneDrive\\Desktop\\RENDER\\my_project\\uploads\\user_2\\Royal_Enfield_QnA.xlsx"
+    ],
+    "excelData": [
+      {
+        "Question": "What is the mileage of Royal Enfield bikes",
+        "Answer": 450
+      },
+      {
+        "Question": "Which Royal Enfield model is best for long rides",
+        "Answer": "The Royal Enfield Himalayan and Interceptor 650 are highly recommended for long rides."
+      },
+      {
+        "Question": "What is the price range of Royal Enfield bikes",
+        "Answer": "Royal Enfield bikes range from 1.5 lakh to 3.8 lakh, depending on the model and variant."
+      },
+      {
+        "Question": "Are Royal Enfield bikes suitable for beginners",
+        "Answer": "Yes, models like the Hunter 350 are beginner-friendly due to their manageable weight and power."
+      },
+      {
+        "Question": "What is the maintenance cost of a Royal Enfield bike",
+        "Answer": "The maintenance cost is moderate, typically around 2,000 to 4,000 rupees per service."
+      },
+      {
+        "Question": "What are the engine capacities available in Royal Enfield models",
+        "Answer": "Royal Enfield offers bikes with engine capacities ranging from 350cc to 650cc."
+      },
+      {
+        "Question": "Do Royal Enfield bikes have a good resale value",
+        "Answer": "Yes, Royal Enfield bikes generally retain a good resale value due to their popularity."
+      },
+      {
+        "Question": "What are the color options available for Royal Enfield bikes",
+        "Answer": "Popular colors include black, white, red, green, and custom shades depending on the model."
+      },
+      {
+        "Question": "How is the after sales service of Royal Enfield",
+        "Answer": "After sales service is generally good, with a wide network of service centers across India."
+      },
+      {
+        "Question": "What is the jio bike",
+        "Answer": "the jio bike is jio bike"
+      }
+    ]
+  }
+]
