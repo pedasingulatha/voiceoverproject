@@ -84,43 +84,6 @@ app.get('/user/:userId/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-// Modify the ask route to use the unique URL
-app.post('/user/:userId/ask', (req, res) => {
-    const { userId } = req.params;
-
-    // Validate the user ID with the session
-    if (parseInt(userId) !== req.session.userId) {
-        
-    }
-
-    const question = req.body.question.trim();
-
-    const query = 'SELECT file_path FROM excel_files WHERE user_id = ?';
-
-    db.query(query, [userId], (err, results) => {
-        if (!results.length) return res.status(404).send('No Excel files found.');
-
-        let answer = null;
-
-        results.forEach(file => {
-            const filePath = file.file_path;
-            if (fs.existsSync(filePath)) {
-                const workbook = xlsx.readFile(filePath);
-                const data = workbook.SheetNames.flatMap(sheet => xlsx.utils.sheet_to_json(workbook.Sheets[sheet]));
-
-                const fuse = new Fuse(data, {
-                    keys: ['Question'],
-                    threshold: 0.4
-                });
-
-                const result = fuse.search(question);
-                if (result.length > 0) answer = result[0].item.Answer;
-            }
-        });
-
-        res.json({ message: answer || 'No matching answer found.' });
-    });
-});
 
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
@@ -196,65 +159,6 @@ app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-// app.post('/ask', (req, res) => {
-//     if (!req.session.userId) {
-//         return res.status(401).send('Unauthorized. Please login first.');
-//     }
-
-//     const question = req.body.question.trim();
-//     const referrer = req.get('Referer');
-//     const userId = referrer?.split('/user/')[1]?.split('/')[0];
-//     console.log(userId);
-//     // const userId = req.session.userId;
-
-//     if (!question) {
-//         return res.status(400).send('Question is required.');
-//     }
-
-//     // Read the current users data from users.json
-//     const usersData = fs.existsSync(usersFilePath) ? fs.readFileSync(usersFilePath) : '[]';
-//     const users = JSON.parse(usersData);
-
-//     // Find the user based on session userId
-//     const user = users.find((u) => u.id === userId);
-//     if (!user) {
-//         return res.status(404).send('User not found.');
-//     }
-
-//     // Check if the user has uploaded any files
-//     if (!user.files || user.files.length === 0) {
-//         return res.status(404).send('No uploaded files found for this user.');
-//     }
-
-//     // Use the most recent file (last uploaded file)
-//     const latestFile = user.files[user.files.length - 1];
-//     if (!fs.existsSync(latestFile)) {
-//         return res.status(404).send('Latest file not found on the server.');
-//     }
-
-//     // Read the Excel file to get the latest data
-//     const workbook = xlsx.readFile(latestFile);
-//     const data = workbook.SheetNames.flatMap(sheet =>
-//         xlsx.utils.sheet_to_json(workbook.Sheets[sheet])
-//     );
-
-//     // Find a matching answer to the user's question
-//     let responseMessage = 'No matching answer found.';
-//     const fuse = new Fuse(data, {
-//         keys: ['Question'], // Ensure your Excel data has a "Question" column
-//         threshold: 0.4,
-//     });
-
-//     const result = fuse.search(question);
-//     if (result.length > 0) {
-//         responseMessage = result[0].item.Answer; // Ensure your Excel data has an "Answer" column
-//     }
-
-//     // Adding a delay to ensure processing
-//     setTimeout(() => {
-//         res.json({ message: responseMessage });
-//     }, 1000); // Delay of 1000ms (1 second)
-// });
 
 app.post('/ask', (req, res) => {
     const question = req.body.question?.trim();
@@ -293,11 +197,6 @@ app.post('/ask', (req, res) => {
 
     // Use the most recent file
     const latestFile = user.files[user.files.length - 1];
-    if (!fs.existsSync(latestFile)) {
-        console.log('Latest file not found on the server.');
-        return res.status(404).send('Latest file not found on the server.');
-    }
-
     // Read the Excel file
     const workbook = xlsx.readFile(latestFile);
     const data = workbook.SheetNames.flatMap(sheet =>
@@ -324,7 +223,6 @@ app.post('/ask', (req, res) => {
 
 // Upload Excel file and update database
 app.post('/upload-excel', upload.single('excel_file'), (req, res) => {
-    if (!req.session.userId) return res.status(401).send('Unauthorized. Please log in first.');
 
     const userId = req.session.userId;
     const filePath = req.file.path;
